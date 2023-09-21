@@ -1,10 +1,15 @@
-function AppBar() {
+import React, {useState} from 'react';
+
+function AppBar({tabs, activeTab, setActiveTab}) {
+  const[showMobileMenu, setShowMobileMenu]=useState(false);
   return (
     <nav class="bg-white">
-  <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+  <div class="mx-auto px-2 sm:px-6 lg:px-8 border">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-        <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-green-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+        <button type="button" 
+         class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-green-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" 
+         aria-controls="mobile-menu" aria-expanded="false" onClick={()=>setShowMobileMenu(!showMobileMenu)}>
           <span class="absolute -inset-0.5"></span>
           <span class="sr-only">Open main menu</span>
           <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -21,22 +26,33 @@ function AppBar() {
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
-            <a href="#" class="border-b-2 border-green-600 text-green-600 px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a>
-            <a href="#" class="text-gray-700 hover:border-b-2 hover:border-green-500 hover:text-green-500 px-3 py-2 text-sm font-medium">Planner</a>
-            <a href="#" class="text-gray-700 hover:border-b-2 hover:border-green-500 hover:text-green-500 px-3 py-2 text-sm font-medium">Workouts</a>
+	        {tabs.map((tab, index) => (
+	          <a 
+	           href="#" 
+	           class={index === activeTab ? "border-b-2 border-green-600 text-green-600 px-3 py-2 flex h-16 justify-center items-center text-sm font-medium" : "flex h-16 justify-center items-center text-gray-700 hover:border-b-2 hover:border-green-500 hover:text-green-500 px-3 py-2 text-sm font-medium"}
+	           onClick={()=>setActiveTab(index)}
+	           >
+	           {tab.label}
+	           </a>
+	        ))}
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="sm:hidden" id="mobile-menu">
-    <div class="space-y-1 px-2 pb-3 pt-2">
-      <a href="#" class="border-b-2 border-green-600 text-green-600 block px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
-      <a href="#" class="text-gray-700 hover:border-b-2 hover:border-green-500 hover:text-green-500 block px-3 py-2 text-base font-medium">Planner</a>
-      <a href="#" class="text-gray-700 hover:border-b-2 hover:border-green-500 hover:text-green-500 block px-3 py-2 text-base font-medium">Workouts</a>
+  {showMobileMenu && <div class="sm:hidden" id="mobile-menu">
+    <div class="space-y-1 px-2 pb-2 pt-2">
+      {tabs.map((tab, index) => (
+	    <a href="#" 
+	     class={index === activeTab ? "border-b-2 border-green-600 text-green-600 block px-3 py-2 text-base font-medium" : "text-gray-700 hover:border-b-2 hover:border-green-500 hover:text-green-500 block px-3 py-2 text-base font-medium"}
+	     onClick={()=>setActiveTab(index)}
+	     >
+	     {tab.label}
+	     </a>
+	  ))}
     </div>
-  </div>
+  </div>}
 </nav>
   );
 }
