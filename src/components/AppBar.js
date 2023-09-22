@@ -8,7 +8,7 @@ function AppBar({tabs, activeTab, setActiveTab}) {
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <button type="button" 
-         class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-green-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" 
+         class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-green-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" 
          aria-controls="mobile-menu" aria-expanded="false" onClick={()=>setShowMobileMenu(!showMobileMenu)}>
           <span class="absolute -inset-0.5"></span>
           <span class="sr-only">Open main menu</span>
@@ -41,11 +41,11 @@ function AppBar({tabs, activeTab, setActiveTab}) {
     </div>
   </div>
 
-  {showMobileMenu && <div class="sm:hidden" id="mobile-menu">
+  {showMobileMenu && <div class="sm:hidden border shadow-sm" id="mobile-menu">
     <div class="space-y-1 px-2 pb-2 pt-2">
       {tabs.map((tab, index) => (
 	    <a href="#" 
-	     class={index === activeTab ? "border-b-2 border-green-600 text-green-600 block px-3 py-2 text-base font-medium" : "text-gray-700 hover:border-b-2 hover:border-green-500 hover:text-green-500 block px-3 py-2 text-base font-medium"}
+	     class={index === activeTab ? "text-green-600 block px-3 py-2 text-base font-medium" : "text-gray-700  hover:text-green-500 block px-3 py-2 text-base font-medium"}
 	     onClick={()=>setActiveTab(index)}
 	     >
 	     {tab.label}
