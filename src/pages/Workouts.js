@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { useQuery, useMutation } from 'react-query';
+import Exercise from "../components/Exercise";
 
 const fetchWorkouts = async () => {
   const response = await fetch('/workouts');
@@ -20,7 +21,6 @@ const createWorkout = async (workout) => {
 };
 
 function Workouts() {
-  const[showCreateWorkout, setShowCreateWorkout]=useState(false);	
   const { data, isLoading, isError, error } = useQuery('workouts', fetchWorkouts);
 
   const addItemMutation = useMutation(createWorkout);
@@ -37,15 +37,12 @@ function Workouts() {
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {error.message}</p>;
   console.log(data);
-  if (showCreateWorkout) return (<div>Form</div>);
   return (
     <div class="max-w-screen-xl mx-auto px-5 bg-white min-h-sceen mt-8">
 	<div class="flex justify-between items-center py-2">
 		<span class="text-bold text-lg">Workouts</span>
-		<span class="rounded-md text-green-600 border border-green-500 p-2 hover:bg-green-500 hover:text-white cursor-pointer"
-		 onClick={()=>setShowCreateWorkout(true)}>Add Workout</span>
 	</div>
-	<div class="grid divide-y divide-neutral-200  mx-auto border px-5">
+	<div class="grid divide-y divide-neutral-200  mx-auto border px-5 overflow-y-scroll">
 		{data.map((workout, index) => (
 		<div class="py-5">
 			<details class="group">
@@ -64,6 +61,9 @@ function Workouts() {
 					        </caption>
 					        <thead class="text-xs text-gray-700 uppercase bg-gray-50 border">
 					            <tr>
+					            	<th scope="col" class="px-6 py-3">
+					                    <span class="sr-only">Action</span>
+					                </th>
 					                <th scope="col" class="px-6 py-3">
 					                    Exercise
 					                </th>
@@ -71,41 +71,25 @@ function Workouts() {
 					                    Type
 					                </th>
 					                <th scope="col" class="px-6 py-3">
-					                    weight(kgs)
+					                    Load
 					                </th>
 					                <th scope="col" class="px-6 py-3">
 					                    Reps
 					                </th>
 					                <th scope="col" class="px-6 py-3">
+					                    Sets
+					                </th>
+					                <th scope="col" class="px-6 py-3">
 					                    Videos
 					                </th>
 					                <th scope="col" class="px-6 py-3">
-					                    <span class="sr-only">Edit</span>
+					                    Notes
 					                </th>
 					            </tr>
 					        </thead>
 					        <tbody>
 					        {workout.exercises.map((exercise, index) => (
-					        	<tr class="bg-white border-b">
-					                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-					                    {exercise.name}
-					                </th>
-					                <td class="px-6 py-4">
-					                    {exercise.exercise_type}
-					                </td>
-					                <td class="px-6 py-4">
-					                    {exercise.weight_in_kgs}
-					                </td>
-					                <td class="px-6 py-4">
-					                    {exercise.rep_count}
-					                </td>
-					                <td class="px-6 py-4">
-					                    {exercise.video_urls}
-					                </td>
-					                <td class="px-6 py-4 text-right">
-					                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-					                </td>
-					            </tr>
+					        	<Exercise exercise={exercise} />
 							 ))}					            
 					        </tbody>
 					    </table>

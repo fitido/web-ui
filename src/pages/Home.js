@@ -1,5 +1,5 @@
 
-function Dashboard() {
+function Exercise() {
   return (
     <div>
       <AppBar />
@@ -7,4 +7,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Exercise;
