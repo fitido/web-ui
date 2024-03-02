@@ -4,7 +4,7 @@ import RichTextEditor from './RichTextEditor.js';
 import ReadOnlyEditor from './ReadOnlyEditor.js';
 import SavedStatus from '../SavedStatus.js';
 import fetchWithBaseUrl from '../Fetch.js'
-import { VscEdit, VscSave } from 'react-icons/vsc';
+import { VscEdit, VscSave, VscTrash } from 'react-icons/vsc';
 
 const fetchNotes = async () => {
   const response = await fetchWithBaseUrl('/notes');
@@ -36,11 +36,25 @@ const updateNotes = async (note) => {
     return data;
   };
 
+  const deleteNotes = async (note) => {
+    const response = await fetchWithBaseUrl('/notes/'+note.id, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    return data;
+  };
+
 function Note({note}) {
     console.log(note)
+    const [deleted, setDeleted] = useState(false); 
     const [editable, setEditable] = useState(note.editable); 
     const[lastSaved, setLastSaved]=useState(null);
     const updateItemMutation = useMutation(updateNotes);
+    const deleteItemMutation = useMutation(deleteNotes);
+    
     const created_at = new Date(note.created_at);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = created_at.toLocaleDateString('en-US', options);
@@ -65,15 +79,26 @@ function Note({note}) {
         }
     };
 
+    const handleDelete = async () => {
+        try {
+            setDeleted(true);
+            await deleteItemMutation.mutateAsync(note);
+        } catch (err) {
+            console.error('Error adding item:', err);
+        }
+    };
+    if (deleted) return;
     return (
         <div class="flex flex-col h-full w-full mb-4 items-center" key={note.id}>
             <div class="flex flex-col items-center w-full">
             <div class="flex w-full justify-between items-center p-2">
                 <div class="flex flex-row items-center">
                 <p class="text-xl text-gray-700 font-bold">{formattedDate}</p>
-                <VscEdit class="flex items-center justify-center text-bold h-4 w-4 ml-4" 
+                <VscEdit class="flex items-center justify-center text-gray-500 text-bold h-4 w-4 ml-4 hover:text-gray-700" 
                     onClick={() => setEditable(true)}/>
-                {editable && <VscSave class="flex items-center justify-center text-bold text-green-500 h-4 w-4 ml-4" 
+                <VscTrash class="flex items-center justify-center text-red-500 text-bold h-4 w-4 ml-4 hover:text-red-700" 
+                    onClick={handleDelete}/>
+                {editable && <VscSave class="flex items-center justify-center text-bold text-green-500 h-4 w-4 ml-4 hover:text-green-700" 
                     onClick={handleSave}/>}
                 </div>
                 <p><SavedStatus savedTime={lastSaved}/></p>
@@ -119,7 +144,7 @@ function Planner() {
     
     {notes.concat(data).map((note) => (
         <div class="mb-4">
-        <Note note={note} />
+            <Note note={note} />
         </div>
     ))}
     </div>
