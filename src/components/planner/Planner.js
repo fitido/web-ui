@@ -9,17 +9,17 @@ const fetchNotes = async () => {
   return data;
 };
 
-const createNotes = async (note) => {
-  const response = await fetch('/notes', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ note }),
-  });
-  const data = await response.json();
-  return data;
-};
+// const createNotes = async (note) => {
+//   const response = await fetch('/notes', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ note }),
+//   });
+//   const data = await response.json();
+//   return data;
+// };
 
 const updateNotes = async (note) => {
     const response = await fetch('/notes/'+note.id, {
@@ -64,16 +64,16 @@ function Note({note}) {
 function Planner() {
     const { data, isLoading, isError, error } = useQuery('notes', fetchNotes);
 
-    const addItemMutation = useMutation(createNotes);
+    // const addItemMutation = useMutation(createNotes);
 
-    const handleAddNote = async (note) => {
-        try {
-        const newNote = await addItemMutation.mutateAsync(note);
-        console.log('Note added:', newNote);
-        } catch (err) {
-        console.error('Error adding item:', err);
-        }
-    };
+    // const handleAddNote = async (note) => {
+    //     try {
+    //     const newNote = await addItemMutation.mutateAsync(note);
+    //     console.log('Note added:', newNote);
+    //     } catch (err) {
+    //     console.error('Error adding item:', err);
+    //     }
+    // };
 
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error: {error.message}</p>;
