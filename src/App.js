@@ -23,7 +23,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div class="flex h-screen flex-col">
+      <div class="flex h-screen flex-col bg-gray-50">
         <AppBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
         <div class="flex-1">
           {getActiveComponent()}
