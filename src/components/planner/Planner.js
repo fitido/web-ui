@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import { useQuery, useMutation } from 'react-query';
 import RichTextEditor from './RichTextEditor.js';
 import SavedStatus from '../SavedStatus.js';
+import fetchWithBaseUrl from '../Fetch.js'
 
 const fetchNotes = async () => {
-  const response = await fetch('/notes');
+  const response = await fetchWithBaseUrl('/notes');
   const data = await response.json();
   return data;
 };
@@ -22,7 +23,7 @@ const fetchNotes = async () => {
 // };
 
 const updateNotes = async (note) => {
-    const response = await fetch('/notes/'+note.id, {
+    const response = await fetchWithBaseUrl('/notes/'+note.id, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
