@@ -27,13 +27,12 @@ function AppBar({tabs, activeTab, setActiveTab}) {
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
 	        {tabs.map((tab, index) => (
-	          <a 
-	           href="#" 
+	          <p
 	           class={index === activeTab ? "border-b-2 border-green-600 text-green-600 px-3 py-2 flex h-16 justify-center items-center text-sm font-medium" : "flex h-16 justify-center items-center text-gray-700 hover:border-b-2 hover:border-green-500 hover:text-green-500 px-3 py-2 text-sm font-medium"}
 	           onClick={()=>setActiveTab(index)}
 	           >
 	           {tab.label}
-	           </a>
+	           </p>
 	        ))}
           </div>
         </div>
@@ -44,12 +43,12 @@ function AppBar({tabs, activeTab, setActiveTab}) {
   {showMobileMenu && <div class="sm:hidden border shadow-sm" id="mobile-menu">
     <div class="space-y-1 px-2 pb-2 pt-2">
       {tabs.map((tab, index) => (
-	    <a href="#" 
+	    <p
 	     class={index === activeTab ? "text-green-600 block px-3 py-2 text-base font-medium" : "text-gray-700  hover:text-green-500 block px-3 py-2 text-base font-medium"}
 	     onClick={()=>setActiveTab(index)}
 	     >
 	     {tab.label}
-	     </a>
+	     </p>
 	  ))}
     </div>
   </div>}
