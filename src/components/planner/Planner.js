@@ -133,7 +133,7 @@ function Planner() {
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error: {error.message}</p>;
     return (
-    <div class="flex flex-col h-full mx-4 lg:px-2 md:mx-8 lg:mx-8">
+    <div class="flex flex-col h-full mx-4 lg:px-2 md:mx-8 lg:mx-8 mb-4">
         <div class="flex flex-row justify-between md:justify-start lg:justify-start my-4">
         <p class="flex text-xl text-gray-700 font-bold p-1 mr-4">Trainer notes</p>
         <button class="flex text-white text-xs item-center justify-center rounded-md border bg-green-600 hover:bg-green-500 p-2 px-4"
@@ -142,14 +142,10 @@ function Planner() {
         </button>
         </div>
     {notes.map((note) => (
-        <div class="mb-4">
-            <Note note={note} />
-        </div>
+        <Note note={note} />
     ))}
     {data.map((note) => (
-        <div class="mb-4">
-            <Note note={note} />
-        </div>
+        <Note note={note} />
     ))}
     </div>
     );
