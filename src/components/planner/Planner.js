@@ -141,8 +141,12 @@ function Planner() {
             Add Note
         </button>
         </div>
-    
-    {notes.concat(data).map((note) => (
+    {notes.map((note) => (
+        <div class="mb-4">
+            <Note note={note} />
+        </div>
+    ))}
+    {data.map((note) => (
         <div class="mb-4">
             <Note note={note} />
         </div>
