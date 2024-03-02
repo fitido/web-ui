@@ -5,7 +5,7 @@ import SavedStatus from '../SavedStatus.js';
 import fetchWithBaseUrl from '../Fetch.js'
 
 const fetchNotes = async () => {
-  const response = await fetchWithBaseUrl('/notes',{mode:'no-cors'});
+  const response = await fetchWithBaseUrl('/notes');
   const data = await response.json();
   return data;
 };

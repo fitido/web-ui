@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/notes',
     createProxyMiddleware({
-      target: 'http://localhost:3001',
+      target: process.env.NDOE_ENV === 'production' ? 'https://fitido-server.onrender.com' : 'http://localhost:3001',
       changeOrigin: true,
     })
   );
