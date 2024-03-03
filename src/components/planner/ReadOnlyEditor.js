@@ -12,6 +12,7 @@ export default function ReadOnlyEditor({note}) {
             menubar: false,
             toolbar: false,
             editable_root: false,
+            elementpath: false,
         }}
         />
     );

@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import { useQuery, useMutation } from 'react-query';
 import RichTextEditor from './RichTextEditor.js';
 import ReadOnlyEditor from './ReadOnlyEditor.js';
-import SavedStatus from '../SavedStatus.js';
 import fetchWithBaseUrl from '../Fetch.js'
 import { VscEdit, VscSave, VscTrash } from 'react-icons/vsc';
 
@@ -13,7 +12,7 @@ const fetchNotes = async () => {
 };
 
 const createNotes = async (note) => {
-  const response = await fetch('/notes', {
+  const response = await fetchWithBaseUrl('/notes', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -51,7 +50,6 @@ function Note({note}) {
     console.log(note)
     const [deleted, setDeleted] = useState(false); 
     const [editable, setEditable] = useState(note.editable); 
-    const[lastSaved, setLastSaved]=useState(null);
     const updateItemMutation = useMutation(updateNotes);
     const deleteItemMutation = useMutation(deleteNotes);
     
@@ -61,7 +59,6 @@ function Note({note}) {
     const handleUpdateNote = async (note) => {
         try {
             const updatedNote = await updateItemMutation.mutateAsync(note);
-            setLastSaved(new Date());
             console.log('Note updated:', updatedNote);
         } catch (err) {
             console.error('Error adding item:', err);
@@ -71,7 +68,6 @@ function Note({note}) {
     const handleSave = async () => {
         try {
             const updatedNote = await updateItemMutation.mutateAsync(note);
-            setLastSaved(new Date());
             setEditable(false);
             console.log('Note updated:', updatedNote);
         } catch (err) {
@@ -101,7 +97,6 @@ function Note({note}) {
                 {editable && <VscSave class="flex items-center justify-center text-bold text-green-500 h-4 w-4 ml-4 hover:text-green-700" 
                     onClick={handleSave}/>}
                 </div>
-                <p><SavedStatus savedTime={lastSaved}/></p>
             </div>
             <div class="flex-1 items-center w-full mceNonEditable">
                 {editable && <RichTextEditor note={note} onChange={handleUpdateNote}/>}
