@@ -8,4 +8,21 @@ module.exports = function(app) {
       changeOrigin: true,
     })
   );
+
+  app.use(
+    '/trainers',
+    createProxyMiddleware({
+      target: process.env.NDOE_ENV === 'production' ? 'https://fitido-server.onrender.com' : 'http://localhost:3001',
+      changeOrigin: true,
+    })
+  );
+
+  app.use(
+    '/trainees',
+    createProxyMiddleware({
+      target: process.env.NDOE_ENV === 'production' ? 'https://fitido-server.onrender.com' : 'http://localhost:3001',
+      changeOrigin: true,
+    })
+  );
+  
 };

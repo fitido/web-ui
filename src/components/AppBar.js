@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-function AppBar({tabs, activeTab, setActiveTab}) {
+function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee}) {
   const[showMobileMenu, setShowMobileMenu]=useState(false);
   return (
     <nav class="bg-white">
@@ -34,7 +34,21 @@ function AppBar({tabs, activeTab, setActiveTab}) {
 	           {tab.label}
 	           </p>
 	        ))}
+          <div class="flex">
+            <select 
+              id="trainees" 
+              onChange={(e) => setSelectedTrainee(e.target.value)}
+              class="text-gray-700 hover:text-green-500 hover:border-b-2 hover:border-green-500 outline-none text-sm font-medium w-full p-2">
+              {trainer.trainees.map((trainee) => (
+                <option key={trainee.id} 
+                  value={trainee.id}>
+                    {trainee.name}
+                </option>
+              ))}
+            </select>
           </div>
+          </div>
+          
         </div>
       </div>
     </div>
@@ -51,6 +65,19 @@ function AppBar({tabs, activeTab, setActiveTab}) {
 	     </p>
 	  ))}
     </div>
+    <div class="space-y-1 px-2 pb-2 pt-2 w-auto">
+            <select 
+              id="trainees" 
+              onChange={(e) => setSelectedTrainee(e.target.value)}
+              class="text-gray-700 hover:text-green-500 outline-none text-base font-medium w-full p-2">
+              {trainer.trainees.map((trainee) => (
+                <option key={trainee.id} 
+                  value={trainee.id}>
+                    {trainee.name}
+                </option>
+              ))}
+            </select>
+          </div>
   </div>}
 </nav>
   );

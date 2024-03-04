@@ -5,8 +5,8 @@ import ReadOnlyEditor from './ReadOnlyEditor.js';
 import fetchWithBaseUrl from '../Fetch.js'
 import { VscEdit, VscSave, VscTrash } from 'react-icons/vsc';
 
-const fetchNotes = async () => {
-  const response = await fetchWithBaseUrl('/notes');
+const fetchNotes = async (traineeId) => {
+  const response = await fetchWithBaseUrl('/trainees/'+traineeId);
   const data = await response.json();
   return data;
 };
@@ -107,14 +107,15 @@ function Note({note}) {
     );
 }
 
-function Planner() {
-    const { data, isLoading, isError, error } = useQuery('notes', fetchNotes);
+function Planner({traineeId}) {
+    console.log("planner",traineeId)
+    const { data, isLoading, isError, error } = useQuery(['notes', traineeId], () => fetchNotes(traineeId));
     const [notes, setNotes] = useState([]);     
     const addItemMutation = useMutation(createNotes);
 
     const handleAddNote = async () => {
         try {
-        const newNote = await addItemMutation.mutateAsync({content:'<p>New Note 1</p>'});
+        const newNote = await addItemMutation.mutateAsync({trainee_id:traineeId ,content:'<p>New Note 1</p>'});
         var notesCopy = [...notes];
         newNote.editable = true;
         notesCopy.push(newNote);
@@ -139,7 +140,7 @@ function Planner() {
     {notes.map((note) => (
         <Note note={note} />
     ))}
-    {data.map((note) => (
+    {data.notes.map((note) => (
         <Note note={note} />
     ))}
     </div>
