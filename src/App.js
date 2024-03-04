@@ -41,7 +41,7 @@ function App() {
   if (isError) return <p>Error: {error.message}</p>;
 
   return (
-    <div class="flex h-screen flex-col bg-gray-50">
+    <div class="flex h-screen flex-col">
       <AppBar 
         tabs={tabs} 
         activeTab={activeTab} 

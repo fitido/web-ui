@@ -3,7 +3,7 @@ import { Editor } from '@tinymce/tinymce-react';
 
 export default function RichTextEditor({note, onChange}) {
     const handleChange = (newValue, editor) => {
-        note.content=newValue;
+        note.content = newValue
         onChange(note)
     }
 
