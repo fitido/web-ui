@@ -86,7 +86,7 @@ const updateNotes = async (note) => {
     };
     if (deleted) return;
     return (
-        <div class="flex flex-col h-full w-full mb-4 items-center" key={note.id}>
+        <div class="flex flex-col h-full w-full mb-4 items-center">
             <div class="flex flex-col items-center w-full">
             <div class="flex w-full justify-between items-center p-2">
                 <div class="flex flex-row items-center">
@@ -133,7 +133,7 @@ function Planner({traineeId}) {
         </button>
         </div>
     {data.notes.map((note) => (
-        <Note note={note} />
+        <Note note={note} key={note.id}/>
     ))}
     </div>
     );
