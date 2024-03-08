@@ -17,7 +17,7 @@ export default function RichTextEditor({note, onChange}) {
             plugins: 'anchor autolink emoticons image link lists media searchreplace table visualblocks checklist mediaembed casechange export pageembed linkchecker a11ychecker permanentpen powerpaste advtable advcode editimage advtemplate mentions mergetags autocorrect typography inlinecss',
             toolbar: 'undo redo | blocks | bold italic underline strikethrough  | align lineheight | checklist numlist bullist indent outdent ',
             line_height_formats: '0.5 1 1.2 1.4 1.6 2',
-            content_style: "body { line-height: 0.5; }",
+            content_style: "body { line-height: 0.5;}",
             elementpath: false,
         }}
         value={note.content}

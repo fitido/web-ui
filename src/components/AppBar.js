@@ -26,14 +26,6 @@ function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee}) {
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
-	        {tabs.map((tab, index) => (
-	          <p
-	           class={index === activeTab ? "border-b-2 border-green-600 text-green-600 px-3 py-2 flex h-16 justify-center items-center text-sm font-medium" : "flex h-16 justify-center items-center text-gray-700 hover:border-b-2 hover:border-green-500 hover:text-green-500 px-3 py-2 text-sm font-medium"}
-	           onClick={()=>setActiveTab(index)}
-	           >
-	           {tab.label}
-	           </p>
-	        ))}
           <div class="flex">
             <select 
               id="trainees" 
@@ -47,6 +39,14 @@ function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee}) {
               ))}
             </select>
           </div>
+	        {tabs.map((tab, index) => (
+	          <p
+	           class={index === activeTab ? "border-b-2 border-green-600 text-green-600 px-3 py-2 flex h-16 justify-center items-center text-sm font-medium" : "flex h-16 justify-center items-center text-gray-700 hover:border-b-2 hover:border-green-500 hover:text-green-500 px-3 py-2 text-sm font-medium"}
+	           onClick={()=>setActiveTab(index)}
+	           >
+	           {tab.label}
+	           </p>
+	        ))}
           </div>
           
         </div>
@@ -55,17 +55,7 @@ function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee}) {
   </div>
 
   {showMobileMenu && <div class="sm:hidden border shadow-sm" id="mobile-menu">
-    <div class="space-y-1 px-2 pb-2 pt-2">
-      {tabs.map((tab, index) => (
-	    <p
-	     class={index === activeTab ? "text-green-600 block px-3 py-2 text-base font-medium" : "text-gray-700  hover:text-green-500 block px-3 py-2 text-base font-medium"}
-	     onClick={()=>setActiveTab(index)}
-	     >
-	     {tab.label}
-	     </p>
-	  ))}
-    </div>
-    <div class="space-y-1 px-2 pb-2 pt-2 w-auto">
+  <div class="space-y-1 px-2 pt-2 w-auto">
             <select 
               id="trainees" 
               onChange={(e) => setSelectedTrainee(e.target.value)}
@@ -78,6 +68,17 @@ function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee}) {
               ))}
             </select>
           </div>
+    <div class="space-y-1 px-2 pb-2">
+      {tabs.map((tab, index) => (
+	    <p
+	     class={index === activeTab ? "text-green-600 block px-3 py-2 text-base font-medium" : "text-gray-700  hover:text-green-500 block px-3 py-2 text-base font-medium"}
+	     onClick={()=>setActiveTab(index)}
+	     >
+	     {tab.label}
+	     </p>
+	  ))}
+    </div>
+    
   </div>}
 </nav>
   );
