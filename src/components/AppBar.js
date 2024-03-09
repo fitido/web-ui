@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Label, Select } from 'flowbite-react';
 
 function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee}) {
   const[showMobileMenu, setShowMobileMenu]=useState(false);
@@ -26,18 +27,17 @@ function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee}) {
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
-          <div class="flex">
-            <select 
-              id="trainees" 
-              onChange={(e) => setSelectedTrainee(e.target.value)}
-              class="text-gray-700 hover:text-green-500 hover:border-b-2 hover:border-green-500 outline-none text-sm font-medium w-full p-2">
+          <div class="flex items-center justify-center">
+          <Select id="trainees"
+            class="border-none text-sm text-gray-700 font-medium rounded-md focus:outline-none focus:ring-transparent focus:border-none block w-full p-2"
+            onChange={(e) => setSelectedTrainee(e.target.value)}>
               {trainer.trainees.map((trainee) => (
                 <option key={trainee.id} 
                   value={trainee.id}>
                     {trainee.name}
                 </option>
               ))}
-            </select>
+          </Select>
           </div>
 	        {tabs.map((tab, index) => (
 	          <p
@@ -55,20 +55,19 @@ function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee}) {
   </div>
 
   {showMobileMenu && <div class="sm:hidden border shadow-sm" id="mobile-menu">
-  <div class="space-y-1 px-2 pt-2 w-auto">
-            <select 
-              id="trainees" 
-              onChange={(e) => setSelectedTrainee(e.target.value)}
-              class="text-gray-700 hover:text-green-500 outline-none text-base font-medium w-full p-2">
-              {trainer.trainees.map((trainee) => (
-                <option key={trainee.id} 
-                  value={trainee.id}>
-                    {trainee.name}
-                </option>
-              ))}
-            </select>
-          </div>
-    <div class="space-y-1 px-2 pb-2">
+    <div class="space-y-1 px-2 pt-2 w-auto">
+    <Select id="trainees"
+      class="border-none text-gray-700 text-base font-medium rounded-md focus:outline-none focus:ring-transparent focus:border-none block w-full p-2.5 "
+      onChange={(e) => setSelectedTrainee(e.target.value)}>
+        {trainer.trainees.map((trainee) => (
+          <option key={trainee.id} 
+            value={trainee.id}>
+              {trainee.name}
+          </option>
+        ))}
+    </Select>
+    </div>
+    <div class="space-y-1 px-2 pba-2">
       {tabs.map((tab, index) => (
 	    <p
 	     class={index === activeTab ? "text-green-600 block px-3 py-2 text-base font-medium" : "text-gray-700  hover:text-green-500 block px-3 py-2 text-base font-medium"}
@@ -78,7 +77,6 @@ function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee}) {
 	     </p>
 	  ))}
     </div>
-    
   </div>}
 </nav>
   );

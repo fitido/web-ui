@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import AppBar from "./components/AppBar";
 import Planner from "./components/planner/Planner";
-import Progress from "./components/analysis/Progress";
+import Trends from "./components/analysis/Trends.js";
+import Health from "./components/health/Health.js";
 import { useQuery } from 'react-query';
 import fetchWithBaseUrl from './components/Fetch.js'
 
@@ -12,8 +13,9 @@ const fetchTrainer = async () => {
 };
 
 const tabs = [
+    { label: 'Health'},
     { label: 'Notes'},
-    { label: 'Analysis'},
+    { label: 'Trends'},
 ];
 
 function App() {
@@ -31,9 +33,11 @@ function App() {
       setSelectedTrainee(data.trainees[0].id);
     }
     if (activeTab === 0) {
+      return <Health traineeId={selectedTrainee}/>
+    } else if (activeTab === 1) {
       return <Planner traineeId={selectedTrainee}/>
-    } else if (activeTab === 1){
-      return <Progress />
+    } else if (activeTab === 2){
+      return <Trends traineeId={selectedTrainee}/>
     }
   }
 

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useQuery, useMutation } from 'react-query';
-import RichTextEditor from './RichTextEditor.js';
-import ReadOnlyEditor from './ReadOnlyEditor.js';
+import RichTextEditor from '../planner/RichTextEditor.js';
+import ReadOnlyEditor from '../planner/ReadOnlyEditor.js';
 import fetchWithBaseUrl from '../Fetch.js'
 import { VscEdit, VscSave, VscTrash } from 'react-icons/vsc';
 
@@ -107,8 +107,8 @@ const updateNotes = async (note) => {
     );
 }
 
-function Planner({traineeId}) {
-    console.log("planner",traineeId)
+function Trends({traineeId}) {
+    console.log("Trends",traineeId)
     const addItemMutation = useMutation(createNotes);
     const { data, refetch, isLoading, isError, error } = useQuery(['notes', traineeId], () => fetchNotes(traineeId));
 
@@ -127,9 +127,8 @@ function Planner({traineeId}) {
     <div class="flex flex-col h-full px-4 md:px-8 lg:px-10 mb-4 bg-gray-50">
         <div class="flex flex-row justify-between md:justify-start lg:justify-start my-4">
         <p class="flex text-xl text-gray-700 font-bold p-1 mr-4">Trainer notes</p>
-        <button 
-        class="text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:ring-transparent font-medium rounded-md text-sm w-full sm:w-auto px-4 py-2 text-center"
-        onClick={handleAddNote}>
+        <button class="flex text-white text-xs item-center justify-center rounded-md border bg-green-600 hover:bg-green-500 p-2 px-4"
+            onClick={handleAddNote}>
             Add Note
         </button>
         </div>
@@ -140,5 +139,5 @@ function Planner({traineeId}) {
     );
   }
   
-export default Planner;
+export default Trends;
   
