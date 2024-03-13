@@ -1,8 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Sidebar } from 'flowbite-react';
-import { BiBuoy } from 'react-icons/bi';
 import { Select } from 'flowbite-react';
-import { VscBook } from 'react-icons/vsc';
 
 
 const theme = {
@@ -102,7 +100,7 @@ function SideBar({showSideBar, tabs, activeTab, setActiveTab, setSelectedTrainee
         ))}
         </Select>        
         {tabs.map((tab, index) => (
-            <Sidebar.Item active={activeTab==index} href="#" onClick={()=>setActiveTab(index)} icon={tab.icon}>
+            <Sidebar.Item active={activeTab===index} href="#" onClick={()=>setActiveTab(index)} icon={tab.icon}>
                 {tab.label}
             </Sidebar.Item>
 	    ))} 

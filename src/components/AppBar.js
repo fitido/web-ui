@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 
-function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee, toggleSideBar}) {
+function AppBar({toggleSideBar}) {
   return (
     <nav class="bg-white">
   <div class="mx-auto px-2">
