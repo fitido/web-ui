@@ -118,7 +118,7 @@ const theme  = {
   };
 
   
-function Health({traineeId}) {
+function Info({traineeId}) {
     const createMetricsMutation = useMutation(createMetrics);
     const { data, refetch, isLoading, isError, error } = useQuery(['metrics', traineeId], () => fetchTraineeMetrics(traineeId));
     if (isLoading) return <p>Loading...</p>;
@@ -127,6 +127,10 @@ function Health({traineeId}) {
     const capitalized = (word) => {
      return word.charAt(0).toUpperCase() + word.slice(1)
     }
+
+    const age = (dob) => {
+        return (new Date()).getFullYear() - (new Date(dob)).getFullYear();
+       }
     const handleMetricChange = (metric, value) => {
         var copy = {...metric};
         copy.value = value;
@@ -150,8 +154,12 @@ function Health({traineeId}) {
     
     return (
     <div class="flex flex-col h-full px-4 md:px-8 lg:px-10 mb-4 bg-gray-50">
-        <div class="flex flex-row justify-between md:justify-start lg:justify-start my-4">
-            <p class="flex text-xl text-gray-700 font-bold py-1 mr-4">{data.trainee.name}</p>
+        <div class="flex flex-row justify-start my-4">
+            <p class="flex text-xl text-gray-700 font-bold py-1 mr-2">{data.trainee.name}</p>
+            <p class="flex text-xl text-gray-500 py-1 mr-2">/</p>
+            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{data.trainee.gender.charAt(0)}</p>
+            <p class="flex text-xl text-gray-500 py-1 mr-2">/</p>
+            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{age(data.trainee.dob)} years</p>
         </div>
     <div class="grid gap-6 mb-6 md:grid-cols-2 lg:w-8/12">
         {data.metrics.map((metric) => (
@@ -170,5 +178,5 @@ function Health({traineeId}) {
     );
   }
   
-export default Health;
+export default Info;
   

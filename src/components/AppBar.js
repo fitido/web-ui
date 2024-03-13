@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
-import { Label, Select } from 'flowbite-react';
 
-function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee}) {
-  const[showMobileMenu, setShowMobileMenu]=useState(false);
+function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee, toggleSideBar}) {
   return (
     <nav class="bg-white">
-  <div class="mx-auto px-2 sm:px-6 lg:px-8 border">
+  <div class="mx-auto px-2">
     <div class="relative flex h-16 items-center justify-between">
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+      <div class="flex items-center border rounded-md hover:border-green-500">
         <button type="button" 
-         class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-green-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" 
-         aria-controls="mobile-menu" aria-expanded="false" onClick={()=>setShowMobileMenu(!showMobileMenu)}>
+         class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-green-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" 
+         aria-controls="mobile-menu" aria-expanded="false" onClick={()=>toggleSideBar()}>
           <span class="absolute -inset-0.5"></span>
           <span class="sr-only">Open main menu</span>
           <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -23,61 +21,14 @@ function AppBar({tabs, activeTab, setActiveTab, trainer, setSelectedTrainee}) {
       </div>
       <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
         <div class="flex flex-shrink-0 items-center">
-          <span class="rounded-md font-bold px-3 text-xl text-green-600 hover:text-green-500">fitido</span>
-        </div>
-        <div class="hidden sm:ml-6 sm:block">
-          <div class="flex space-x-4">
-          <div class="flex items-center justify-center">
-          <Select id="trainees"
-            class="border-none text-sm text-gray-700 font-medium rounded-md focus:outline-none focus:ring-transparent focus:border-none block w-full p-2"
-            onChange={(e) => setSelectedTrainee(e.target.value)}>
-              {trainer.trainees.map((trainee) => (
-                <option key={trainee.id} 
-                  value={trainee.id}>
-                    {trainee.name}
-                </option>
-              ))}
-          </Select>
-          </div>
-	        {tabs.map((tab, index) => (
-	          <p
-	           class={index === activeTab ? "border-b-2 border-green-600 text-green-600 px-3 py-2 flex h-16 justify-center items-center text-sm font-medium" : "flex h-16 justify-center items-center text-gray-700 hover:border-b-2 hover:border-green-500 hover:text-green-500 px-3 py-2 text-sm font-medium"}
-	           onClick={()=>setActiveTab(index)}
-	           >
-	           {tab.label}
-	           </p>
-	        ))}
-          </div>
-          
+          <span class="rounded-md font-bold px-3 text-2xl text-green-600 hover:text-green-500">fitido</span>
         </div>
       </div>
+      <div class="flex items-center">
+        <div class="flex items-center justify-center w-10 h-10"></div>
+      </div>
+      </div>
     </div>
-  </div>
-
-  {showMobileMenu && <div class="sm:hidden border shadow-sm" id="mobile-menu">
-    <div class="space-y-1 px-2 pt-2 w-auto">
-    <Select id="trainees"
-      class="border-none text-gray-700 text-base font-medium rounded-md focus:outline-none focus:ring-transparent focus:border-none block w-full p-2.5 "
-      onChange={(e) => setSelectedTrainee(e.target.value)}>
-        {trainer.trainees.map((trainee) => (
-          <option key={trainee.id} 
-            value={trainee.id}>
-              {trainee.name}
-          </option>
-        ))}
-    </Select>
-    </div>
-    <div class="space-y-1 px-2 pba-2">
-      {tabs.map((tab, index) => (
-	    <p
-	     class={index === activeTab ? "text-green-600 block px-3 py-2 text-base font-medium" : "text-gray-700  hover:text-green-500 block px-3 py-2 text-base font-medium"}
-	     onClick={()=>setActiveTab(index)}
-	     >
-	     {tab.label}
-	     </p>
-	  ))}
-    </div>
-  </div>}
 </nav>
   );
 }

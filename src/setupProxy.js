@@ -24,5 +24,13 @@ module.exports = function(app) {
       changeOrigin: true,
     })
   );
+
+  app.use(
+    '/metric_logs',
+    createProxyMiddleware({
+      target: process.env.NDOE_ENV === 'production' ? 'https://fitido-server.onrender.com' : 'http://localhost:3001',
+      changeOrigin: true,
+    })
+  );
   
 };
