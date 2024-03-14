@@ -10,11 +10,43 @@ const fetchWeights = async (traineeId) => {
   return data;
 };
 
-const weightAverage = (data) => {
+const dedupe = (data, days) => {
+    var endDate = new Date(data[0].created_at);
+    var startDate = new Date(endDate);
+    startDate.setDate(endDate.getDate() - days);
+    var filteredData = data.filter(data => {
+        var date = new Date(data.created_at)
+        return date > startDate && date <=endDate
+    })
+    var dateDict = {}
+    filteredData.forEach(data => {
+        var date = new Date(data.created_at).toLocaleDateString()
+        
+        if (date in dateDict) {
+            dateDict[date].push(parseFloat(data.value))
+        } else {
+            dateDict[date] = [parseFloat(data.value)]
+        }
+    });
+    console.log(Object.keys(dateDict).sort(), dateDict, "sort");
+    var vals = [];
+    Object.keys(dateDict).sort().forEach(key => {
+        console.log(key, dateDict[key], "sort");
+        let sum = 0.0;
+        let length = dateDict[key].length
+        dateDict[key].forEach((el) => sum += el)
+        console.log(sum, length)
+        vals.push({'x':key,'y':(sum/length).toFixed(2)})
+    })
+    return vals
+}
+
+const weightAverage = (data, days) => {
+    var dedupe_data = dedupe(data, days)
+    console.log(dedupe_data,"ded", data, days)
     let sum = 0.0;
-    let length = data.length
-    console.log("data",data, sum, length)
-    data.forEach((el) => sum += parseFloat(el.value))
+    let length = dedupe_data.length
+    dedupe_data.forEach((el) => sum += parseFloat(el.y))
     return (sum/length).toFixed(2) + " "+data[0].unit;
 }
 
@@ -24,8 +56,9 @@ const dateRange = (data, days) => {
     return startDate +" - "+endDate;
 }
 
-function WeightDelta({data}) {
-    var delta = data[data.length - 1].value - data[0].value
+function WeightDelta({data, days}) {
+    var dedupe_data = dedupe(data, days)
+    var delta = dedupe_data[dedupe_data.length - 1].y - dedupe_data[0].y
     console.log("delta",delta)
     if (delta === 0) {
         return
@@ -68,9 +101,9 @@ function Weight({trainee}) {
                 <div class="flex flex-col justify-start">
                     <p class="text-xs text-gray-500 font-bold uppercase">average weight</p>
                     <p class="text-2xl font-bold">
-                    {weightAverage(data)}
+                    {weightAverage(data, selectedRange[1])}
                     </p>
-                    <p class="inline-flex items-center text-md text-gray-500 font-bold">{dateRange(data, selectedRange[1])} <WeightDelta data={data} /></p>
+                    <p class="inline-flex items-center text-md text-gray-500 font-bold">{dateRange(data, selectedRange[1])} <WeightDelta data={data} days={selectedRange[1]}/></p>
                 </div>
                 <Dropdown label={selectedRange[0]} size="sm" class="border border-gray-200 rounded-md text-gray-700 h-fit">
                     {dropdownRange.map((range) => {
