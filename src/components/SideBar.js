@@ -5,12 +5,12 @@ import { Select } from 'flowbite-react';
 
 const theme = {
     "root": {
-      "base": "h-full",
+      "base": "h-full fixed top-16 left-0 z-40 bg-white sm:relative sm:top-0",
       "collapsed": {
         "on": "w-16",
         "off": "w-64"
       },
-      "inner": "h-full overflow-y-auto overflow-x-hidden border-r border-gray-200 py-4 px-3"
+      "inner": "h-full overflow-y-auto overflow-x-hidden shadow-md sm:shadow-none border-t border-r sm:border-r sm:border-t-0 border-gray-200 py-4 px-3"
     },
     "collapse": {
       "button": "group flex w-full items-center rounded-lg p-2 text-base font-normal text-gray-900 transition duration-75 hover:bg-gray-100",
@@ -86,7 +86,7 @@ function SideBar({showSideBar, tabs, activeTab, setActiveTab, setSelectedTrainee
     return null;
   }  
   return (
-    <Sidebar theme={theme}>
+    <Sidebar theme={theme} collapsed={false}>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
         <Select id="trainees"

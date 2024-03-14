@@ -143,10 +143,8 @@ function Info({traineeId}) {
         var req = {}
         req["trainee_id"] = data.trainee.id
         req["metrics"] = Object.values(updatedMetrics);
-        console.log('Metrics creation req:', req);
         try {
-            const createdMetrics = await createMetricsMutation.mutateAsync(req);
-            console.log('Metrics created:', createdMetrics);
+            await createMetricsMutation.mutateAsync(req);
             // refetch();
         } catch (err) {
             console.error('Error adding metrics:', err);
@@ -154,13 +152,13 @@ function Info({traineeId}) {
     }
     
     return (
-    <div class="flex flex-col h-full px-4 md:px-8 lg:px-10 mb-4 bg-gray-50">
+    <div class="flex flex-col h-full px-4 md:px-6 mb-4 bg-gray-50">
         <div class="flex flex-row justify-start my-4">
             <p class="flex text-xl text-gray-700 font-bold py-1 mr-2">{data.trainee.name}</p>
             <p class="flex text-xl text-gray-500 py-1 mr-2">/</p>
-            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{data.trainee.gender.charAt(0)}</p>
+            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{data.trainee.gender}</p>
             <p class="flex text-xl text-gray-500 py-1 mr-2">/</p>
-            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{age(data.trainee.dob)} years</p>
+            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{age(data.trainee.dob)} yrs</p>
         </div>
     <div class="grid gap-6 mb-6 md:grid-cols-2 lg:w-8/12">
         {data.metrics.map((metric) => (

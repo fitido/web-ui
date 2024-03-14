@@ -2,12 +2,11 @@ import React, {useState} from 'react';
 import AppBar from "./components/AppBar";
 import Planner from "./components/planner/Planner";
 import Trends from "./components/analysis/Trends.js";
-import Health from "./components/health/Health.js";
 import Info from "./components/health/Info.js";
 import { useQuery } from 'react-query';
 import fetchWithBaseUrl from './components/Fetch.js'
 import SideBar from './components/SideBar.js';
-import { VscHeart, VscOutput, VscPulse, VscFlame, VscInfo } from 'react-icons/vsc';
+import { VscOutput, VscPulse, VscFlame, VscInfo } from 'react-icons/vsc';
 
 const fetchTrainer = async () => {
   const response = await fetchWithBaseUrl('/trainers/1');
@@ -17,7 +16,6 @@ const fetchTrainer = async () => {
 
 const tabs = [
     { label: 'Info', icon: VscInfo},
-    { label: 'Health', icon: VscHeart},
     { label: 'Notes', icon: VscOutput},
     { label: 'Trends', icon: VscPulse},
     { label: 'Milestones', icon: VscFlame},
@@ -45,10 +43,8 @@ function App() {
     if (activeTab === 0) {
       return <Info traineeId={selectedTrainee}/>
     } else if (activeTab === 1) {
-      return <Health traineeId={selectedTrainee}/>
-    } else if (activeTab === 2) {
       return <Planner traineeId={selectedTrainee}/>
-    } else if (activeTab === 3){
+    } else if (activeTab === 2) {
       return <Trends traineeId={selectedTrainee}/>
     }
   }
@@ -64,6 +60,7 @@ function App() {
         setActiveTab={setActiveTab} 
         trainer={data}
         setSelectedTrainee={setSelect}
+        showSideBar={showSideBar}
         toggleSideBar={toggleSideBar}/>
       
       <div class="flex-1">

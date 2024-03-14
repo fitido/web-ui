@@ -124,7 +124,7 @@ function Planner({traineeId}) {
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error: {error.message}</p>;
     return (
-    <div class="flex flex-col h-full px-4 md:px-8 lg:px-10 mb-4 bg-gray-50">
+    <div class="flex flex-col h-full px-4 md:px-6 mb-4 bg-gray-50">
         <div class="flex flex-row justify-between md:justify-start lg:justify-start my-4">
         <p class="flex text-xl text-gray-700 font-bold p-1 mr-4">Trainer notes</p>
         <button class="flex shadow-sm hover:shadow-md text-white text-sm font-medium item-center justify-center rounded-md border bg-green-600 focus:outline-none focus:ring-transparent hover:bg-green-500 p-2 px-4"
