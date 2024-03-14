@@ -125,6 +125,7 @@ function Info({traineeId}) {
     if (isError) return <p>Error: {error.message}</p>;
     var updatedMetrics = {};
     const capitalized = (word) => {
+        console.log("word", word)
      return word.charAt(0).toUpperCase() + word.slice(1)
     }
 
