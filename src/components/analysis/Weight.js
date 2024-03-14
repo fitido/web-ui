@@ -5,7 +5,7 @@ import TimeChart from "./TimeChart.js";
 import { Dropdown } from 'flowbite-react';
 
 const fetchWeights = async (traineeId) => {
-  const response = await fetchWithBaseUrl('metric_logs/weight/'+traineeId);
+  const response = await fetchWithBaseUrl('/metric_logs/weight/'+traineeId);
   const data = await response.json();
   return data;
 };
