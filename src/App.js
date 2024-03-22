@@ -21,7 +21,7 @@ const tabs = [
 ];
 
 function App() {
-  const[activeTab, setActiveTab]=useState(0);
+  const[activeTab, setActiveTab]=useState(2);
   const[showSideBar, setShowSideBar]=useState(false);
   const[selectedTrainee, setSelectedTrainee]=useState(null);
   const { data, isLoading, isError, error } = useQuery('trainer', fetchTrainer);

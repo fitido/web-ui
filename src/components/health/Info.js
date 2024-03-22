@@ -183,7 +183,7 @@ function Info({traineeId}) {
     <div class="grid gap-6 mb-6 md:grid-cols-2 lg:w-8/12">
         {data.metrics.map((metric) => (
         <div>
-            <label for="company" class="block mb-2 text-sm font-medium text-gray-900">{capitalized(metric.name)} ({metric.unit})</label>
+            <label for="company" class="block mb-2 text-sm font-medium text-gray-900">{capitalized(metric.label)} ({metric.unit})</label>
             <input 
             type="number" step="0.1"
             defaultValue={metric.value}

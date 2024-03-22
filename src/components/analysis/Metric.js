@@ -3,9 +3,10 @@ import {useQuery} from 'react-query';
 import fetchWithBaseUrl from '../Fetch.js'
 import TimeChart from "./TimeChart.js";
 import { Dropdown } from 'flowbite-react';
+import {VscArrowUp, VscArrowDown} from 'react-icons/vsc';
 
-const fetchWeights = async (traineeId) => {
-  const response = await fetchWithBaseUrl('/metric_logs/weight/'+traineeId);
+const fetchMetric = async (metric, traineeId) => {
+  const response = await fetchWithBaseUrl('/metric_logs/'+ metric +'/'+traineeId);
   const data = await response.json();
   return data;
 };
@@ -41,7 +42,7 @@ const dedupe = (data, days) => {
     return vals
 }
 
-const weightAverage = (data, days) => {
+const average = (data, days) => {
     var dedupe_data = dedupe(data, days)
     console.log(dedupe_data,"ded", data, days)
     let sum = 0.0;
@@ -56,7 +57,7 @@ const dateRange = (data, days) => {
     return startDate +" - "+endDate;
 }
 
-function WeightDelta({data, days}) {
+function Delta({data, days}) {
     var dedupe_data = dedupe(data, days)
     var delta = dedupe_data[dedupe_data.length - 1].y - dedupe_data[0].y
     console.log("delta",delta)
@@ -65,9 +66,15 @@ function WeightDelta({data, days}) {
     }
     const getVal = () => {
         if (delta > 0) {
-            return 'Gained ' + Math.abs(delta).toFixed(1) + ' ' + data[0].unit
+            return <span class="flex items-center flex-grid-1 gap-1">
+                <VscArrowUp /> 
+                <span>{Math.abs(delta).toFixed(1) + ' ' + data[0].unit}</span>
+                </span>
         } else if (delta < 0) {
-            return 'Lost ' + Math.abs(delta).toFixed(1) + ' ' + data[0].unit
+            return <span class="flex items-center flex-grid-1 gap-1">
+            <VscArrowDown /> 
+            <span>{Math.abs(delta).toFixed(1) + ' ' + data[0].unit}</span>
+            </span>
         } else {
             return ''
         }
@@ -85,9 +92,9 @@ const dropdownRange = [
     ["Last 365 days", 365],
 ];
 
-function Weight({trainee}) {
+function Metric({trainee, metric}) {
     const[selectedRange, setSelectedRange]=useState(dropdownRange[0]);
-    const { data, isLoading, isError, error } = useQuery(['weights', trainee.id], () => fetchWeights(trainee.id));
+    const { data, isLoading, isError, error } = useQuery([metric, trainee.id], () => fetchMetric(metric, trainee.id));
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error: {error.message}</p>;
     console.log(data);
@@ -99,11 +106,11 @@ function Weight({trainee}) {
         <div class="bg-white h-fit rounded-md shadow dark:bg-gray-800 p-4 md:p-6">
             <div class="flex justify-between mb-5">
                 <div class="flex flex-col justify-start">
-                    <p class="text-xs text-gray-500 font-bold uppercase">average weight</p>
+                    <p class="text-xs text-gray-500 font-bold uppercase">average {data[0].label}</p>
                     <p class="text-2xl font-bold">
-                    {weightAverage(data, selectedRange[1])}
+                    {average(data, selectedRange[1])}
                     </p>
-                    <p class="inline-flex items-center text-md text-gray-500 font-bold">{dateRange(data, selectedRange[1])} <WeightDelta data={data} days={selectedRange[1]}/></p>
+                    <p class="inline-flex items-center text-md text-gray-500 font-bold">{dateRange(data, selectedRange[1])} <Delta data={data} days={selectedRange[1]}/></p>
                 </div>
                 <Dropdown label={selectedRange[0]} size="sm" class="border border-gray-200 rounded-md text-gray-700 h-fit">
                     {dropdownRange.map((range) => {
@@ -116,5 +123,5 @@ function Weight({trainee}) {
     );
   }
   
-export default Weight;
+export default Metric;
   
