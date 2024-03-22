@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, useMutation } from 'react-query';
 import fetchWithBaseUrl from '../Fetch.js'
+import MessageBanner from '../common/MessageBanner.js';
 // import {Datepicker} from 'flowbite-react';
 
 const fetchTraineeMetrics = async (traineeId) => {
@@ -117,10 +118,17 @@ const createMetrics = async (req) => {
 //     }
 //   };
 
+function BMI(data) {
+    var weight = data.metrics.filter(metric => metric.name === "weight")[0]
+    var height = data.metrics.filter(metric => metric.name === "height")[0]
+
+    return (parseFloat(weight.value) / Math.pow((parseFloat(height.value)/100),2)).toFixed(1);
+}
   
 function Info({traineeId}) {
+    const[message, setMessage]=useState("");
     const createMetricsMutation = useMutation(createMetrics);
-    const { data, isLoading, isError, error } = useQuery(['metrics', traineeId], () => fetchTraineeMetrics(traineeId));
+    const { data,refetch, isLoading, isError, error } = useQuery(['metrics', traineeId], () => fetchTraineeMetrics(traineeId));
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error: {error.message}</p>;
     var updatedMetrics = {};
@@ -128,6 +136,13 @@ function Info({traineeId}) {
         console.log("word", word)
      return word.charAt(0).toUpperCase() + word.slice(1)
     }
+
+    const showMsg = (msg, timeout = 2000) => {
+        setMessage(msg);
+        setTimeout(function () {
+          setMessage("");
+        }, timeout);
+      };
 
     const age = (dob) => {
         return (new Date()).getFullYear() - (new Date(dob)).getFullYear();
@@ -145,20 +160,25 @@ function Info({traineeId}) {
         req["metrics"] = Object.values(updatedMetrics);
         try {
             await createMetricsMutation.mutateAsync(req);
-            // refetch();
+            showMsg("Saved");
+            refetch();
         } catch (err) {
+            showMsg("Error");
             console.error('Error adding metrics:', err);
         }
     }
     
     return (
     <div class="flex flex-col h-full px-4 md:px-6 mb-4 bg-gray-50">
+        <MessageBanner data={message} />
         <div class="flex flex-row justify-start my-4">
             <p class="flex text-xl text-gray-700 font-bold py-1 mr-2">{data.trainee.name}</p>
             <p class="flex text-xl text-gray-500 py-1 mr-2">/</p>
-            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{data.trainee.gender}</p>
+            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{data.trainee.gender.charAt(0)}</p>
             <p class="flex text-xl text-gray-500 py-1 mr-2">/</p>
             <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{age(data.trainee.dob)} yrs</p>
+            <p class="flex text-xl text-gray-500 py-1 mr-2">/</p>
+            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{BMI(data)} BMI</p>
         </div>
     <div class="grid gap-6 mb-6 md:grid-cols-2 lg:w-8/12">
         {data.metrics.map((metric) => (

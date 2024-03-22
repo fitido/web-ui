@@ -65,9 +65,9 @@ function WeightDelta({data, days}) {
     }
     const getVal = () => {
         if (delta > 0) {
-            return 'Gained ' + delta.toFixed(1) + ' ' + data[0].unit
+            return 'Gained ' + Math.abs(delta).toFixed(1) + ' ' + data[0].unit
         } else if (delta < 0) {
-            return 'Lost ' + delta.toFixed(1) + ' ' + data[0].unit
+            return 'Lost ' + Math.abs(delta).toFixed(1) + ' ' + data[0].unit
         } else {
             return ''
         }

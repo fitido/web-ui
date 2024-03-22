@@ -4,6 +4,7 @@ import RichTextEditor from './RichTextEditor.js';
 import ReadOnlyEditor from './ReadOnlyEditor.js';
 import fetchWithBaseUrl from '../Fetch.js'
 import { VscEdit, VscSave, VscTrash } from 'react-icons/vsc';
+import MessageBanner from '../common/MessageBanner.js';
 
 const DEFAULT_CONTENT = '<p>New Note 1</p>';
 
@@ -49,19 +50,28 @@ const updateNotes = async (note) => {
   };
 
   function Note({note}) {
+    const[message, setMessage]=useState("");
     const [deleted, setDeleted] = useState(false);
     const [editable, setEditable] = useState(note.content === DEFAULT_CONTENT);
     const updateItemMutation = useMutation(updateNotes);
     const deleteItemMutation = useMutation(deleteNotes);
-    
+    const showMsg = (msg, timeout = 2000) => {
+        setMessage(msg);
+        setTimeout(function () {
+          setMessage("");
+        }, timeout);
+      };
+
     const created_at = new Date(note.created_at);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = created_at.toLocaleDateString('en-US', options);
     const handleUpdateNote = async (note) => {
         try {
             const updatedNote = await updateItemMutation.mutateAsync(note);
+            showMsg("Saved");
             console.log('Note updated:', updatedNote);
         } catch (err) {
+            showMsg("Error");
             console.error('Error adding item:', err);
         }
     };
@@ -70,8 +80,10 @@ const updateNotes = async (note) => {
         try {
             const updatedNote = await updateItemMutation.mutateAsync(note);
             setEditable(false);
+            showMsg("Saved");
             console.log('Note updated:', updatedNote);
         } catch (err) {
+            showMsg("Error");
             console.error('Error adding item:', err);
         }
     };
@@ -81,12 +93,14 @@ const updateNotes = async (note) => {
             setDeleted(true);
             await deleteItemMutation.mutateAsync(note);
         } catch (err) {
+            showMsg("Error");
             console.error('Error adding item:', err);
         }
     };
     if (deleted) return;
     return (
         <div class="flex flex-col h-full w-full mb-4 items-center">
+            <MessageBanner data={message} />
             <div class="flex flex-col items-center w-full">
             <div class="flex w-full justify-between items-center p-2">
                 <div class="flex flex-row items-center">
@@ -109,6 +123,7 @@ const updateNotes = async (note) => {
 
 function Planner({traineeId}) {
     console.log("planner",traineeId)
+    const[message, setMessage]=useState("");
     const addItemMutation = useMutation(createNotes);
     const { data, refetch, isLoading, isError, error } = useQuery(['notes', traineeId], () => fetchNotes(traineeId));
 
@@ -117,14 +132,23 @@ function Planner({traineeId}) {
         await addItemMutation.mutateAsync({trainee_id:traineeId, content: DEFAULT_CONTENT});
         refetch();
         } catch (err) {
+        showMsg("Error");
         console.error('Error adding item:', err);
         }
     };
+
+    const showMsg = (msg, timeout = 2000) => {
+        setMessage(msg);
+        setTimeout(function () {
+          setMessage("");
+        }, timeout);
+      };
 
     if (isLoading) return <p>Loading...</p>;
     if (isError) return <p>Error: {error.message}</p>;
     return (
     <div class="flex flex-col h-full px-4 md:px-6 mb-4 bg-gray-50">
+        <MessageBanner data={message} />
         <div class="flex flex-row justify-between md:justify-start lg:justify-start my-4">
         <p class="flex text-xl text-gray-700 font-bold p-1 mr-4">Trainer notes</p>
         <button class="flex shadow-sm hover:shadow-md text-white text-sm font-medium item-center justify-center rounded-md border bg-green-600 focus:outline-none focus:ring-transparent hover:bg-green-500 p-2 px-4"

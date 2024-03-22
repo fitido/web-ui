@@ -6,7 +6,7 @@ import Info from "./components/health/Info.js";
 import { useQuery } from 'react-query';
 import fetchWithBaseUrl from './components/Fetch.js'
 import SideBar from './components/SideBar.js';
-import { VscOutput, VscPulse, VscFlame, VscInfo } from 'react-icons/vsc';
+import { VscOutput, VscPulse, VscInfo } from 'react-icons/vsc';
 
 const fetchTrainer = async () => {
   const response = await fetchWithBaseUrl('/trainers/1');
@@ -18,7 +18,6 @@ const tabs = [
     { label: 'Info', icon: VscInfo},
     { label: 'Notes', icon: VscOutput},
     { label: 'Trends', icon: VscPulse},
-    { label: 'Milestones', icon: VscFlame},
 ];
 
 function App() {
