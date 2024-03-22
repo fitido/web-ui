@@ -85,11 +85,11 @@ function Delta({data, days}) {
 }
 
 const dropdownRange = [
-    ["Last 7 days", 7],
-    ["Last 30 days", 30],
-    ["Last 90 days", 90],
-    ["Last 180 days", 180],
-    ["Last 365 days", 365],
+    ["Last 7d", 7],
+    ["Last 30d", 30],
+    ["Last 90d", 90],
+    ["Last 180d", 180],
+    ["Last 365d", 365],
 ];
 
 function Metric({trainee, metric}) {
@@ -112,7 +112,7 @@ function Metric({trainee, metric}) {
                     </p>
                     <p class="inline-flex items-center text-md text-gray-500 font-bold">{dateRange(data, selectedRange[1])} <Delta data={data} days={selectedRange[1]}/></p>
                 </div>
-                <Dropdown label={selectedRange[0]} size="sm" class="border border-gray-200 rounded-md text-gray-700 h-fit">
+                <Dropdown label={selectedRange[0]} size="sm" class="border border-gray-200 rounded-md text-gray-700 h-fit w-fit">
                     {dropdownRange.map((range) => {
                         return <Dropdown.Item onClick={() => setSelectedRange(range)}>{range[0]}</Dropdown.Item>
                     })}
