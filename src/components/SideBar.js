@@ -81,10 +81,15 @@ const theme = {
     }
   };
 
-function SideBar({showSideBar, hideSideBar, tabs, activeTab, setActiveTab, setSelectedTrainee, trainer}) {  
+function SideBar({showSideBar, hideSideBar, tabs, activeTab, setActiveTab, selectedTrainee, setSelectedTrainee, trainer}) {  
   const wrapperRef = useRef(null);
   const handleItemClick = (index) => {
     setActiveTab(index);
+    hideSideBar();
+  }
+
+  const handleTraineeClick = (traineeId) => {
+    setSelectedTrainee(traineeId);
     hideSideBar();
   }
   useEffect(() => {
@@ -110,7 +115,8 @@ function SideBar({showSideBar, hideSideBar, tabs, activeTab, setActiveTab, setSe
         <Sidebar.ItemGroup>
         <Select id="trainees"
          class="px-3 py-2 border-gray-200 text-gray-700 text-base font-medium rounded-md focus:outline-none focus:ring-transparent focus:border-gray-200 block w-full"
-         onChange={(e) => setSelectedTrainee(e.target.value)}>
+         onChange={(e) => handleTraineeClick(e.target.value)}
+         value={selectedTrainee}>
         {trainer.trainees.map((trainee) => (
           <option key={trainee.id} 
             value={trainee.id}>

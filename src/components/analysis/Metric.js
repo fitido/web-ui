@@ -85,11 +85,11 @@ function Delta({data, days}) {
 }
 
 const dropdownRange = [
-    ["Last 7d", 7],
-    ["Last 30d", 30],
-    ["Last 90d", 90],
-    ["Last 180d", 180],
-    ["Last 365d", 365],
+    ["7d", 7],
+    ["30d", 30],
+    ["90d", 90],
+    ["180d", 180],
+    ["365d", 365],
 ];
 
 function Metric({trainee, metric}) {

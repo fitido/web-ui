@@ -74,15 +74,35 @@ function Info({traineeId}) {
     return (
     <div class="flex flex-col h-full px-4 md:px-6 mb-4 bg-gray-50">
         <MessageBanner data={message} />
-        <div class="flex flex-row justify-start my-4">
+        <div class="flex flex-row justify-start mt-4">
             <p class="flex text-xl text-gray-700 font-bold py-1 mr-2">{data.trainee.name}</p>
             <p class="flex text-xl text-gray-500 py-1 mr-2">/</p>
-            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{data.trainee.gender.charAt(0)}</p>
-            <p class="flex text-xl text-gray-500 py-1 mr-2">/</p>
-            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{age(data.trainee.dob)} yrs</p>
-            <p class="flex text-xl text-gray-500 py-1 mr-2">/</p>
-            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{BMI(data)} BMI</p>
+            <p class="flex text-xl text-gray-700 font-semibold py-1 mr-2">{data.trainee.gender}</p>
         </div>
+
+
+    <div class="relative overflow-x-auto rounded-md mb-6 w-full sm:w-1/2">
+        <table class="min-w-48 text-sm text-left rtl:text-right">
+            <tbody>
+                <tr class="border-b">
+                    <th scope="row" class="pr-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        Age
+                    </th>
+                    <td class="px-6 py-4 text-gray-900">
+                    {age(data.trainee.dob)} yrs
+                    </td>
+                </tr>
+                <tr class="border-b">
+                    <th scope="row" class="pr-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                    BMI
+                    </th>
+                    <td class="px-6  py-4 text-gray-900">
+                    {BMI(data)}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div class="grid gap-6 mb-6 md:grid-cols-2 lg:w-8/12">
         {data.metrics.map((metric) => (
         <div>

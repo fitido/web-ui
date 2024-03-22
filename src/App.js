@@ -78,6 +78,7 @@ function App() {
            activeTab={activeTab} 
            setActiveTab={setActiveTab} 
            trainer={data}
+           selectedTrainee={selectedTrainee}
            setSelectedTrainee={setSelect}
           />
           <div class="flex-1">
