@@ -1,7 +1,6 @@
-import React from 'react';
 import { Sidebar } from 'flowbite-react';
 import { Select } from 'flowbite-react';
-
+import React, { useRef, useEffect } from "react";
 
 const theme = {
     "root": {
@@ -81,12 +80,32 @@ const theme = {
       "img": "mr-3 h-6 sm:h-7"
     }
   };
-function SideBar({showSideBar, tabs, activeTab, setActiveTab, setSelectedTrainee, trainer}) {  
+
+function SideBar({showSideBar, hideSideBar, tabs, activeTab, setActiveTab, setSelectedTrainee, trainer}) {  
+  const wrapperRef = useRef(null);
+  const handleItemClick = (index) => {
+    setActiveTab(index);
+    hideSideBar();
+  }
+  useEffect(() => {
+
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+          hideSideBar();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [wrapperRef, hideSideBar]);
+
   if (!showSideBar) {
     return null;
   }  
   return (
-    <Sidebar theme={theme} collapsed={false}>
+    <div ref={wrapperRef}>
+    <Sidebar  theme={theme} collapsed={false}>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
         <Select id="trainees"
@@ -100,13 +119,14 @@ function SideBar({showSideBar, tabs, activeTab, setActiveTab, setSelectedTrainee
         ))}
         </Select>        
         {tabs.map((tab, index) => (
-            <Sidebar.Item active={activeTab===index} href="#" onClick={()=>setActiveTab(index)} icon={tab.icon}>
+            <Sidebar.Item active={activeTab===index} href="#" onClick={() => handleItemClick(index)} icon={tab.icon}>
                 {tab.label}
             </Sidebar.Item>
 	    ))} 
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
+    </div>
   );
 }
 

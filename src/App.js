@@ -21,7 +21,7 @@ const tabs = [
 ];
 
 function App() {
-  const[activeTab, setActiveTab]=useState(2);
+  const[activeTab, setActiveTab]=useState(1);
   const[showSideBar, setShowSideBar]=useState(false);
   const[selectedTrainee, setSelectedTrainee]=useState(null);
   const { data, isLoading, isError, error } = useQuery('trainer', fetchTrainer);
@@ -33,6 +33,13 @@ function App() {
 
   const toggleSideBar = () => {
     setShowSideBar(!showSideBar);
+  };
+
+  const hideSideBar = () => {
+    console.log("hide width",window.innerWidth);
+    if (window.innerWidth < 768) {
+      setShowSideBar(false);
+    }
   };
 
   function getActiveComponent() {
@@ -66,6 +73,7 @@ function App() {
         <div class="flex flex-row h-full border">
           <SideBar 
            showSideBar={showSideBar}
+           hideSideBar={hideSideBar}
            tabs={tabs} 
            activeTab={activeTab} 
            setActiveTab={setActiveTab} 
