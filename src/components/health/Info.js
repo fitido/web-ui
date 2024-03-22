@@ -81,11 +81,11 @@ function Info({traineeId}) {
         </div>
 
 
-    <div class="relative overflow-x-auto rounded-md mb-6 w-full sm:w-1/2">
-        <table class="min-w-48 text-sm text-left rtl:text-right">
+    <div class="relative overflow-x-auto rounded-md mb-6 w-full sm:w-1/3">
+        <table class="w-full text-sm text-left rtl:text-right">
             <tbody>
                 <tr class="border-b">
-                    <th scope="row" class="pr-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                    <th scope="row" class="py-4 font-medium text-gray-900 whitespace-nowrap">
                         Age
                     </th>
                     <td class="px-6 py-4 text-gray-900">
@@ -93,7 +93,7 @@ function Info({traineeId}) {
                     </td>
                 </tr>
                 <tr class="border-b">
-                    <th scope="row" class="pr-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                    <th scope="row" class="py-4 font-medium text-gray-900 whitespace-nowrap">
                     BMI
                     </th>
                     <td class="px-6  py-4 text-gray-900">
