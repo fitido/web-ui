@@ -68,7 +68,6 @@ const updateNotes = async (note) => {
     const handleUpdateNote = async (note) => {
         try {
             const updatedNote = await updateItemMutation.mutateAsync(note);
-            showMsg("Saved");
             console.log('Note updated:', updatedNote);
         } catch (err) {
             showMsg("Error");
