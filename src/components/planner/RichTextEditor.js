@@ -14,6 +14,7 @@ export default function RichTextEditor({note, onChange}) {
         init={{
             branding: false,
             menubar: false,
+            min_height: 640,
             plugins: 'anchor autolink emoticons image link lists media searchreplace table visualblocks linkchecker',
             toolbar: 'undo redo | blocks | bold italic underline strikethrough  | align lineheight | checklist numlist bullist indent outdent ',
             elementpath: false,

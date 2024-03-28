@@ -13,6 +13,7 @@ export default function ReadOnlyEditor({note}) {
             toolbar: false,
             editable_root: false,
             elementpath: false,
+            min_height: 640,
             content_style: "body { user-select: all;} ",
         }}
         />
